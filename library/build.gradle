@@ -13,4 +13,5 @@ android {
 
 task docs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
+    classpath = files(((Object) android.bootClasspath.join(File.pathSeparator)))
 }
