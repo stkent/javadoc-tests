@@ -11,11 +11,16 @@ android {
     }
 }
 
-task docs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath = files(((Object) android.bootClasspath.join(File.pathSeparator)))
-}
-
 dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
+}
+
+android.libraryVariants.all { variant ->
+    if (variant.name == 'release') {
+        task docs(type: Javadoc) {
+            source = variant.javaCompile.source
+            classpath = files(((Object) android.bootClasspath.join(File.pathSeparator)))
+            classpath += files(variant.javaCompile.classpath.files)
+        }
+    }
 }
